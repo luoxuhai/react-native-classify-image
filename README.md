@@ -1,22 +1,31 @@
 # react-native-classify-image
 
-使用 Vision 对图像进行分类的 react-native 库 | react-native library to classify images using Vision
+使用 Vision 对图像进行分类的 react-native 库 | React-native library to classify images using Vision
 
 <img style="width: 50%;margin: 0 auto;" src="https://s4.ax1x.com/2022/01/15/7JJaDI.png" />
 
-识别结果，值越大可信度越高（[0 - 1]区间内的小数）
+识别结果，`confidence`（置信度，[0 - 1]区间内的小数）的值越大可信度越高。
 
 ```js
-{
-  animal: 0.848, // 动物
-  cat: 0.823, // 猫
-  mammal: 0.811, // 哺乳动物
-  clothing: 0.676, // 衣服
-  beanie: 0.645, // 小圆帽
-  hat: 0.631, // 帽子
-  people: 0.616), // 人
+[
+  {
+    identifier: "animal";  // 动物
+    confidence: 0.848;
+  },
+  {
+    identifier: "cat"; // 猫
+    confidence: 0.848;
+  },
+  {
+    identifier: "clothing";
+    confidence: 0.676; // 衣服
+  },
+  {
+    identifier: "hat"; // 帽子
+    confidence: 0.631;
+  },
   ...
- }
+]
 ```
 
 ## ❗️ :warning:
@@ -54,7 +63,7 @@ ClassifyImage.request(path) // 绝对本地路径
   });
 ```
 
-### 高级使用 (使用网络图像)
+### 高级使用
 
 ```js
 import * as ClassifyImage from 'react-native-classify-image';
@@ -72,8 +81,7 @@ RNFS.downloadFile({
     orientation: ClassifyImage.Orientation.Up,
   })
     .then((result) => {
-      console.log(result);
-      // { animal: 0.848, cat: 0.848, mammal: 0.848, clothing: 0.676, beanie: 0.675, hat: 0.675, people: 0.616), ... }
+      // success
     })
     .catch((error) => {
       // error
@@ -83,21 +91,28 @@ RNFS.downloadFile({
 
 ## API
 
-### `request(path: string, options?: Object): Promise<{[key: string]: number}[]>`
+### `request(path: string, options?: Object): Promise<Result[]>`
 
-| Parameter          | Type   | Description                                                                                                            |
+| 参数               | 类型   | 描述                                                                                                                   |
 | ------------------ | ------ | ---------------------------------------------------------------------------------------------------------------------- |
 | **path**           | string | 图像文件的本地绝对路径. 可使用 [react-native-fs constants](https://github.com/itinance/react-native-fs#constants) 获取 |
-| **options** (可选) | Object | 可选项，见下 `Options`                                                                                                 |
+| **options** (可选) | object | 可选项，见下 `Options`                                                                                                 |
 
 ### Options
 
-| Parameter                             | Type    | Description                                                                                            | Default value    |
+| 参数                                  | 类型    | 描述                                                                                                   | 默认值           |
 | ------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------ | ---------------- |
 | **minConfidence** (可选)              | string  | 最小置信度，仅返回大于等于该值的数据。取值范围:[0-1]                                                   | 0.1              |
 | **preferBackgroundProcessing** (可选) | boolean | 如果设置为 `true`，则此属性会减少请求的内存占用、处理占用和 CPU/GPU 争用，但可能会花费更长的执行时间。 | false            |
 | **usesCPUOnly** (可选)                | boolean | 仅在 CPU 上执行。设置 `false` 表示可以自由地利用 GPU 来加速其处理。                                    | false            |
-| **orientation** (可选)                | boolean | 图像的方向                                                                                             | `Orientation.Up` |
+| **orientation** (可选)                | number  | 图像的方向                                                                                             | `Orientation.Up` |
+
+### Result - 识别结果
+
+| 名称           | 类型   | 描述            |
+| -------------- | ------ | --------------- |
+| **identifier** | string | 分类标签名      |
+| **confidence** | number | 置信度，[0 - 1] |
 
 ### Orientation
 
@@ -126,6 +141,7 @@ RNFS.downloadFile({
 
 - [ ] 支持 iOS 11.0+（使用 MobileNet）
 - [ ] 支持识别指定区域
+- [ ] 支持网络图像
 
 ## License
 

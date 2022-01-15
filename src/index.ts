@@ -2,7 +2,7 @@ import { NativeModules } from 'react-native';
 
 const { ClassifyImage } = NativeModules;
 
-export const enum Orientation {
+export enum Orientation {
   /** 默认方向 */
   Up = 1,
   /** 水平翻转 */
@@ -45,6 +45,17 @@ export interface Options {
   orientation?: Orientation;
 }
 
+export interface Result {
+  /**
+   * 分类标签名
+   */
+  identifier: string;
+  /**
+   * 置信度，[0 - 1]
+   */
+  confidence: number;
+}
+
 /**
  * 请求图像分类
  *
@@ -52,10 +63,7 @@ export interface Options {
  * @param path 图像本地路径
  * @param options 配置
  */
-export function request(
-  path: string,
-  options?: Options
-): Promise<Record<string, number>> {
+export function request(path: string, options?: Options): Promise<Result[]> {
   return ClassifyImage.request({
     path,
     ...options,
