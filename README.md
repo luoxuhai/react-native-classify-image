@@ -139,7 +139,8 @@ RNFS.downloadFile({
 
 ## TODO
 
-- [ ] 支持 iOS 11.0+（使用 MobileNet）
+- [ ] 支持 iOS 11.0+
+- [ ] 支持 Android
 - [ ] 支持识别指定区域
 - [ ] 支持网络图像
 
