@@ -2,7 +2,6 @@ import Vision
 
 @objc(ClassifyImage)
 class ClassifyImage: NSObject {
-
     @objc(request:withResolver:withRejecter:)
     func request(options: NSDictionary, resolve:RCTPromiseResolveBlock,reject:RCTPromiseRejectBlock) -> Void {
         if #available(iOS 13.0, *) {
@@ -26,6 +25,17 @@ class ClassifyImage: NSObject {
             }
         } else {
             reject("ERROR", "'VNClassifyImageRequest' is only available in iOS 13.0 or newer", nil)
+        }
+    }
+    
+    @available(iOS 15.0, *)
+    @objc(supportedIdentifiers:withRejecter:)
+    func supportedIdentifiers(resolve:RCTPromiseResolveBlock,reject:RCTPromiseRejectBlock) -> Void {
+        do {
+            let identifiers = try VNClassifyImageRequest().supportedIdentifiers()
+            resolve(identifiers)
+        } catch {
+            reject("ERROR", error.localizedDescription, error)
         }
     }
 

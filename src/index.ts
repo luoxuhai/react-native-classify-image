@@ -69,3 +69,13 @@ export function request(path: string, options?: Options): Promise<Result[]> {
     ...options,
   });
 }
+
+/**
+ * 支持的标识符
+ *
+ * @async
+ * @returns 返回请求在其当前配置中支持的分类标识符。
+ */
+export function supportedIdentifiers(): Promise<string[]> {
+  return ClassifyImage.supportedIdentifiers();
+}
