@@ -1,6 +1,6 @@
 {
   "name": "react-native-classify-image",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "使用 Vision 对图像进行分类的 react-native 库 | react-native library to classify images using Vision",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
