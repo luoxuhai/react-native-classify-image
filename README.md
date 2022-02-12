@@ -9,19 +9,31 @@
 ```js
 [
   {
-    identifier: "animal";  // 动物
+    identifier: {
+      en: "animal",
+      zh_cn: "动物"
+    },
     confidence: 0.848;
   },
   {
-    identifier: "cat"; // 猫
+    identifier: {
+      en:  "cat",
+      zh_cn: "猫"
+    },
     confidence: 0.848;
   },
   {
-    identifier: "clothing";
-    confidence: 0.676; // 衣服
+    identifier: {
+      en: "clothing",
+      zh_cn: "衣服"
+    },
+    confidence: 0.676;
   },
   {
-    identifier: "hat"; // 帽子
+    identifier: {
+      en: "hat",
+      zh_cn: "帽子"
+    },
     confidence: 0.631;
   },
   ...
@@ -98,6 +110,8 @@ RNFS.downloadFile({
 | **path**           | string | 图像文件的本地绝对路径. 可使用 [react-native-fs constants](https://github.com/itinance/react-native-fs#constants) 获取 |
 | **options** (可选) | object | 可选项，见下 `Options`                                                                                                 |
 
+### `supportedIdentifiers(): Promise<string[]>`
+
 ### Options
 
 | 参数                                  | 类型    | 描述                                                                                                   | 默认值           |
@@ -111,7 +125,7 @@ RNFS.downloadFile({
 
 | 名称           | 类型   | 描述            |
 | -------------- | ------ | --------------- |
-| **identifier** | string | 分类标签名      |
+| **identifier** | object | 分类标签名      |
 | **confidence** | number | 置信度，[0 - 1] |
 
 ### Orientation

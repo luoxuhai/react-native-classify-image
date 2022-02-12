@@ -1,5 +1,7 @@
 import { NativeModules } from 'react-native';
 
+import identifiers from './identifiers.json';
+
 const { ClassifyImage } = NativeModules;
 
 export enum Orientation {
@@ -45,15 +47,25 @@ export interface Options {
   orientation?: Orientation;
 }
 
-export interface Result {
+interface BaseResult {
   /**
    * 分类标签名
    */
-  identifier: string;
+  identifier: any;
   /**
    * 置信度，[0 - 1]
    */
   confidence: number;
+}
+
+export interface Result extends BaseResult {
+  /**
+   * 分类标签名
+   */
+  identifier: {
+    en: string;
+    zh_cn: string;
+  };
 }
 
 /**
@@ -63,10 +75,27 @@ export interface Result {
  * @param path 图像本地路径
  * @param options 配置
  */
-export function request(path: string, options?: Options): Promise<Result[]> {
+export async function request(
+  path: string,
+  options?: Options
+): Promise<Result[]> {
   return ClassifyImage.request({
     path,
     ...options,
+  }).then((results: BaseResult[]) => {
+    return results?.map((item) => {
+      const identifier = (identifiers as { [key: string]: any })[
+        item.identifier
+      ];
+
+      return {
+        ...item,
+        identifier: {
+          en: identifier?.en ?? item.identifier,
+          zh_cn: identifier?.zh_cn,
+        },
+      };
+    });
   });
 }
 
