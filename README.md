@@ -9,7 +9,7 @@ English | [简体中文](./README-zh_CN.md)
 
 For the identification result, the larger the value of `confidence` (confidence, a decimal in the [0 - 1] interval), the higher the confidence.
 
-````js
+```js
 [
   {
     identifier: {
@@ -41,7 +41,7 @@ For the identification result, the larger the value of `confidence` (confidence,
   },
   ...
 ]
-````
+```
 
 ## ❗️ :warning:
 
@@ -55,32 +55,43 @@ or
 
 `$ yarn add react-native-classify-image`
 
-````sh
+### Bare React Native
+
+```sh
 # RN >= 0.60
 cd ios && pod install
 # RN < 0.60
 react-native link react-native-classify-image
-````
+```
+
+### Expo
+
+```sh
+expo prebuild
+```
 
 ## Usage
 
 ### Basic usage
 
-````js
+```js
 import * as ClassifyImage from 'react-native-classify-image';
 
-ClassifyImage.request(path) // Local path
+// Local path
+const path =
+  '/var/mobile/Containers/Data/Library/Caches/E5FA7C16-9E74-4C38-A7BA-FC2180D20DE9.jpg';
+ClassifyImage.request(path)
   .then((result) => {
     // success
   })
   .catch((error) => {
     // error
   });
-````
+```
 
 ### Advanced usage
 
-````js
+```js
 import * as ClassifyImage from 'react-native-classify-image';
 import RNFS from 'react-native-fs';
 
@@ -102,33 +113,32 @@ RNFS.downloadFile({
       // error
     });
 });
-````
+```
 
 ## API
 
 ### `request(path: string, options?: Object): Promise<Result[]>`
 
-| Name               | Type   | Description                                                                                                                   |
-| ------------------ | ------ | ---------------------------------------------------------------------------------------------------------------------- |
-| **path**           | string | Local absolute path to the image file. Available with [react-native-fs constants](https://github.com/itinance/react-native-fs#constants) |
-| **options** (Optional) | object | See below `Options`             
+| Name                   | Type   | Description                                                                                                                              |
+| ---------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| **path**               | string | Local absolute path to the image file. Available with [react-native-fs constants](https://github.com/itinance/react-native-fs#constants) |
+| **options** (Optional) | object | See below `Options`                                                                                                                      |
 
 ### `supportedIdentifiers(): Promise<string[]>`
 
 ### Options
 
-| Name                                  | Type    | Description                                                                                                   | Default           |
-| ------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------ | ---------------- |
-| **minConfidence** (Optional)              | string  | Minimum confidence, only return data greater than or equal to this value. Ranges:[0-1]                                                   | 0.1              |
+| Name                                      | Type    | Description                                                                                                                                           | Default          |
+| ----------------------------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- |
+| **minConfidence** (Optional)              | string  | Minimum confidence, only return data greater than or equal to this value. Ranges:[0-1]                                                                | 0.1              |
 | **preferBackgroundProcessing** (Optional) | boolean | If set to `true`, this property reduces the request's memory footprint, processing footprint, and CPU/GPU contention, but may take longer to execute. | false            |
-| **usesCPUOnly** (Optional)                | boolean | Execute on CPU only. Setting `false` means that the GPU is free to use the GPU to speed up its processing.                  | false            |
-| **orientation** (Optional)                | number  | Image orientation                                                                                             | `Orientation.Up` |
-
+| **usesCPUOnly** (Optional)                | boolean | Execute on CPU only. Setting `false` means that the GPU is free to use the GPU to speed up its processing.                                            | false            |
+| **orientation** (Optional)                | number  | Image orientation                                                                                                                                     | `Orientation.Up` |
 
 ### Result - recognition result
 
-| Name | Type | Description |
-| -------------- | ------ | --------------- |
+| Name           | Type   | Description         |
+| -------------- | ------ | ------------------- |
 | **identifier** | object | Category label name |
 | **confidence** | number | confidence, [0 - 1] |
 

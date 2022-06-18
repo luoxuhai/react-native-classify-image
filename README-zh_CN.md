@@ -55,11 +55,19 @@ or
 
 `$ yarn add react-native-classify-image`
 
+### React Native
+
 ```sh
 # RN >= 0.60
 cd ios && pod install
 # RN < 0.60
 react-native link react-native-classify-image
+```
+
+### Expo
+
+```sh
+expo prebuild
 ```
 
 ## Usage
@@ -69,7 +77,10 @@ react-native link react-native-classify-image
 ```js
 import * as ClassifyImage from 'react-native-classify-image';
 
-ClassifyImage.request(path) // 绝对本地路径
+// 本地路径
+const path =
+  '/var/mobile/Containers/Data/Library/Caches/E5FA7C16-9E74-4C38-A7BA-FC2180D20DE9.jpg';
+ClassifyImage.request(path)
   .then((result) => {
     // success
   })
